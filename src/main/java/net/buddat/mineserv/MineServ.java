@@ -11,27 +11,34 @@ import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class MineServ.
  */
 public class MineServ {
-	
+
 	/** The Constant PORT. */
 	public static final int PORT = 25565;
-	
+
 	/** The mineserv instance. */
 	private static MineServ mineservInstance;
-	
+
 	/** The connection acceptor. */
-	private IoAcceptor connectionAcceptor;
-	
+	private final IoAcceptor connectionAcceptor;
+
 	/** The server io handler. */
-	private IoHandler serverIoHandler;
-	
+	private final IoHandler serverIoHandler;
+
 	/** The server engine. */
-	private Engine serverEngine;
+	private final Engine serverEngine;
+
+	/**
+	 * Default logger for this class.
+	 */
+	private final Logger logger = LoggerFactory.getLogger(MineServ.class);
 
 	/**
 	 * The main method.
@@ -41,32 +48,33 @@ public class MineServ {
 	public static void main(String[] args) {
 		new MineServ();
 	}
-	
+
 	/**
 	 * Instantiates a new mine serv.
 	 */
 	public MineServ() {
 		mineservInstance = this;
-		
+
 		serverEngine = new Engine();
-		
+
 		connectionAcceptor = new NioSocketAcceptor();
 		serverIoHandler = new ConnectionHandler();
-		
+
 		connectionAcceptor.getFilterChain().addLast("logger", new LoggingFilter());
 		connectionAcceptor.getFilterChain().addLast("protocolFilter", new ProtocolCodecFilter(new MinecraftCodecFactory()));
-		
+
 		connectionAcceptor.setHandler(serverIoHandler);
-		
+
 		try {
 			connectionAcceptor.bind(new InetSocketAddress(PORT));
+			logger.info("Bound to port: {}", PORT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		serverEngine.start();
 	}
-	
+
 	/**
 	 * Gets the single instance of MineServ.
 	 *
