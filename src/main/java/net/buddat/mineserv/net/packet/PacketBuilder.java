@@ -60,7 +60,7 @@ public class PacketBuilder {
 		try {
 			byte[] sBytes = s.getBytes(encoding);
 			
-			addShort((short) sBytes.length);
+			addShort((short) s.length());
 			System.arraycopy(sBytes, 0, payload, curLength, sBytes.length);
 			
 			curLength += sBytes.length;
