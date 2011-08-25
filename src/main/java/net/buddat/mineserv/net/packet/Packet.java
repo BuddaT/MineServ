@@ -8,10 +8,10 @@ public class Packet {
 	private int packetId;
 	private byte[] payload;
 
-	public Packet(IoSession session, int id, byte[] incoming) {
+	public Packet(IoSession session, int id, byte[] payload) {
 		this.session = session;
 		this.packetId = id;
-		this.payload = incoming;
+		this.payload = payload;
 	}
 
 	public IoSession getSession() {

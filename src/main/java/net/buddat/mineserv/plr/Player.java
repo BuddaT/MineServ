@@ -7,6 +7,7 @@ public class Player {
 	private IoSession session;
 	
 	private String playerName;
+	private String connectionHash;
 
 	public Player(IoSession ioSession) {
 		session = ioSession;
@@ -26,5 +27,13 @@ public class Player {
 
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
+	}
+
+	public String getConnectionHash() {
+		return connectionHash;
+	}
+
+	public void setConnectionHash(String connectionHash) {
+		this.connectionHash = connectionHash;
 	}
 }

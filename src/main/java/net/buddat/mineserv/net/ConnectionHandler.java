@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.buddat.mineserv.Engine;
 import net.buddat.mineserv.MineServ;
-import net.buddat.mineserv.net.codec.MinecraftCodecFactory;
 import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.plr.Player;
 import net.buddat.mineserv.plr.PlayerManager;
@@ -13,7 +12,6 @@ import net.buddat.mineserv.util.Logger;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
 
 public class ConnectionHandler implements IoHandler {
 	
@@ -45,7 +43,7 @@ public class ConnectionHandler implements IoHandler {
 
 	@Override
 	public void messageSent(IoSession session, Object msg) throws Exception {
-		
+		Logger.log("Message sent: " + ((Packet) msg).getPacketId() + ", " + new String(((Packet) msg).getPayload()));
 	}
 
 	@Override
