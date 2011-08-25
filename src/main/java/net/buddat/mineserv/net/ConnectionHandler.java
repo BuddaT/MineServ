@@ -1,6 +1,11 @@
 package net.buddat.mineserv.net;
 
+import java.util.ArrayList;
+
+import net.buddat.mineserv.Engine;
 import net.buddat.mineserv.MineServ;
+import net.buddat.mineserv.net.codec.MinecraftCodecFactory;
+import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.plr.Player;
 import net.buddat.mineserv.plr.PlayerManager;
 import net.buddat.mineserv.util.Logger;
@@ -8,13 +13,20 @@ import net.buddat.mineserv.util.Logger;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
 
 public class ConnectionHandler implements IoHandler {
 	
+	private Engine serverEngine;
 	private PlayerManager plrManager;
 	
+	private ArrayList<Packet> packetQueue;
+	
 	public ConnectionHandler() {
-		plrManager = MineServ.getInstance().getEngine().getPlayerManager();
+		serverEngine = MineServ.getInstance().getEngine();
+		plrManager = serverEngine.getPlayerManager();
+		
+		packetQueue = serverEngine.getPacketQueue();
 	}
 
 	@Override
@@ -24,12 +36,15 @@ public class ConnectionHandler implements IoHandler {
 	}
 
 	@Override
-	public void messageReceived(IoSession session, Object arg1) throws Exception {
+	public void messageReceived(IoSession session, Object msg) throws Exception {
+		Packet p = (Packet) msg;
+		Logger.log("Packet recieved from: " + ((Player) session.getAttribute("PLAYER")).getPlayerName() + ", PACKETID: " + p.getPacketId());
 		
+		packetQueue.add(p);
 	}
 
 	@Override
-	public void messageSent(IoSession session, Object arg1) throws Exception {
+	public void messageSent(IoSession session, Object msg) throws Exception {
 		
 	}
 
@@ -49,6 +64,8 @@ public class ConnectionHandler implements IoHandler {
 		
 		Player newPlayer = new Player(session);
 		plrManager.addPlayer(newPlayer);
+		
+		session.setAttribute("PLAYER", newPlayer);
 	}
 
 	@Override

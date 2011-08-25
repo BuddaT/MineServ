@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import net.buddat.mineserv.net.ConnectionHandler;
+import net.buddat.mineserv.net.codec.MinecraftCodecFactory;
+import net.buddat.mineserv.util.Logger;
 
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.service.IoHandler;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 // TODO: Auto-generated Javadoc
@@ -50,6 +53,8 @@ public class MineServ {
 		connectionAcceptor = new NioSocketAcceptor();
 		serverIoHandler = new ConnectionHandler();
 		
+		connectionAcceptor.getFilterChain().addLast("protocolFilter", new ProtocolCodecFilter(new MinecraftCodecFactory()));
+		
 		connectionAcceptor.setHandler(serverIoHandler);
 		
 		try {
@@ -57,6 +62,8 @@ public class MineServ {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		serverEngine.start();
 	}
 	
 	/**
