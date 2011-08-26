@@ -2,14 +2,19 @@ package net.buddat.mineserv;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.buddat.mineserv.net.codec.MinecraftProtocolEncoder;
 import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.net.packet.PacketHandler;
 import net.buddat.mineserv.net.packet.handlers.*;
 import net.buddat.mineserv.plr.PlayerManager;
-import net.buddat.mineserv.util.Logger;
 
 public class Engine {
 
+	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
+	
 	private PlayerManager playerManager;
 	
 	private ArrayList<Packet> packetQueue = new ArrayList<Packet>();
@@ -50,7 +55,7 @@ public class Engine {
 			if (ph != null) {
 				ph.handlePacket(p);
 			} else {
-				Logger.err("Unhandled Packet: " + p.getPacketId());
+				logger.error("Unhandled Packet: " + p.getPacketId());
 			}
 		}
 		

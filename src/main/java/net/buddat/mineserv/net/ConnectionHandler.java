@@ -4,16 +4,20 @@ import java.util.ArrayList;
 
 import net.buddat.mineserv.Engine;
 import net.buddat.mineserv.MineServ;
+import net.buddat.mineserv.net.codec.MinecraftProtocolEncoder;
 import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.plr.Player;
 import net.buddat.mineserv.plr.PlayerManager;
-import net.buddat.mineserv.util.Logger;
 
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ConnectionHandler implements IoHandler {
+	
+	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
 	
 	private Engine serverEngine;
 	private PlayerManager plrManager;
@@ -36,14 +40,13 @@ public class ConnectionHandler implements IoHandler {
 	@Override
 	public void messageReceived(IoSession session, Object msg) throws Exception {
 		Packet p = (Packet) msg;
-		Logger.log("Packet recieved from: " + ((Player) session.getAttribute("PLAYER")).getPlayerName() + ", PACKETID: " + p.getPacketId());
 		
 		packetQueue.add(p);
 	}
 
 	@Override
 	public void messageSent(IoSession session, Object msg) throws Exception {
-		Logger.log("Message sent: " + ((Packet) msg).getPacketId() + ", " + new String(((Packet) msg).getPayload()));
+		
 	}
 
 	@Override
@@ -52,14 +55,11 @@ public class ConnectionHandler implements IoHandler {
 		
 		if (p != null) {
 			plrManager.removePlayer(p);
-			Logger.log("Player Disconnected: " + p.getPlayerName());
 		}
 	}
 
 	@Override
-	public void sessionCreated(IoSession session) throws Exception {
-		Logger.log("New Connection: " + session.getRemoteAddress());
-		
+	public void sessionCreated(IoSession session) throws Exception {		
 		Player newPlayer = new Player(session);
 		plrManager.addPlayer(newPlayer);
 		
