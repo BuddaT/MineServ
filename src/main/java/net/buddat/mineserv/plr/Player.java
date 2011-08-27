@@ -1,5 +1,7 @@
 package net.buddat.mineserv.plr;
 
+import net.buddat.mineserv.net.packet.PacketStore;
+
 import org.apache.mina.core.session.IoSession;
 
 public class Player {
@@ -8,6 +10,8 @@ public class Player {
 	
 	private String playerName, playerTitle = "";
 	private String connectionHash;
+	
+	private short health;
 	
 	private boolean connected = false;
 
@@ -53,5 +57,21 @@ public class Player {
 
 	public void setPlayerTitle(String playerTitle) {
 		this.playerTitle = playerTitle;
+	}
+
+	public short getHealth() {
+		return health;
+	}
+
+	public void setHealth(short health, boolean sendUpdate) {
+		if (health > 20)
+			health = 20;
+		else if (health < 0)
+			health = 0;
+		
+		this.health = health;
+		
+		if (sendUpdate)
+			this.session.write(PacketStore.getHealthUpdatePacket(this.health));
 	}
 }
