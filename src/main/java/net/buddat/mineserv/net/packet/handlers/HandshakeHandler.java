@@ -3,13 +3,11 @@ package net.buddat.mineserv.net.packet.handlers;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.mina.core.session.IoSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import net.buddat.mineserv.net.codec.MinecraftProtocolEncoder;
 import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.net.packet.PacketBuilder;
 import net.buddat.mineserv.net.packet.PacketHandler;
+import net.buddat.mineserv.net.packet.PacketStore;
 import net.buddat.mineserv.plr.Player;
 
 public class HandshakeHandler implements PacketHandler {
@@ -26,7 +24,7 @@ public class HandshakeHandler implements PacketHandler {
 			System.arraycopy(payload, 2, name, 0, name.length);
 			
 			try {
-				String s = new String(name, "UTF-16BE");
+				String s = new String(name, PacketStore.UTF16);
 				plr.setPlayerName(s);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
@@ -37,7 +35,7 @@ public class HandshakeHandler implements PacketHandler {
 			
 			int packetLength = 2 + (connectionHash.length() * 2); //Needs to be (2+(length*2)) due to 2 bytes per char in UTF-16 (plus 2 for the length short)
 	
-			session.write(new PacketBuilder(packetLength).setId(2).addString(connectionHash, "UTF-16BE").toPacket());
+			session.write(new PacketBuilder(packetLength).setId(2).addString(connectionHash, PacketStore.UTF16).toPacket());
 		}
 	}
 

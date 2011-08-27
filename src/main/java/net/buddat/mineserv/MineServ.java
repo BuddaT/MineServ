@@ -22,6 +22,7 @@ public class MineServ {
 
 	/** The Constant PORT. */
 	public static final int PORT = 25565;
+	public static final String BANNED_LIST = "banned.txt", IPBANNED_LIST = "banned-ip.txt";
 
 	/** The mineserv instance. */
 	private static MineServ mineservInstance;
@@ -92,5 +93,5 @@ public class MineServ {
 	public Engine getEngine() {
 		return serverEngine;
 	}
-
+	
 }

@@ -8,6 +8,8 @@ public class Packet {
 	private int packetId;
 	private byte[] payload;
 
+	protected Packet() { }
+
 	public Packet(IoSession session, int id, byte[] payload) {
 		this.session = session;
 		this.packetId = id;
@@ -24,6 +26,18 @@ public class Packet {
 
 	public byte[] getPayload() {
 		return payload;
+	}
+	
+	public void setSession(IoSession session) {
+		this.session = session;
+	}
+
+	public void setPacketId(int packetId) {
+		this.packetId = packetId;
+	}
+
+	public void setPayload(byte[] payload) {
+		this.payload = payload;
 	}
 
 }

@@ -54,8 +54,8 @@ public class PacketBuilder {
 	}
 	
 	public PacketBuilder addString(String s, String encoding) {
-		if (!encoding.equals("UTF-16BE") && !encoding.equals("UTF-8"))
-			encoding = "UTF-16BE";
+		if (!encoding.equals(PacketStore.UTF16) && !encoding.equals(PacketStore.UTF8))
+			encoding = PacketStore.UTF16;
 		
 		try {
 			byte[] sBytes = s.getBytes(encoding);

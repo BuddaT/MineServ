@@ -8,6 +8,8 @@ public class Player {
 	
 	private String playerName;
 	private String connectionHash;
+	
+	private boolean connected = false;
 
 	public Player(IoSession ioSession) {
 		session = ioSession;
@@ -35,5 +37,13 @@ public class Player {
 
 	public void setConnectionHash(String connectionHash) {
 		this.connectionHash = connectionHash;
+	}
+	
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+
+	public boolean isConnected() {
+		return connected;
 	}
 }
