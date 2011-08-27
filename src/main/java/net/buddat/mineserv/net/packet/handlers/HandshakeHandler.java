@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import org.apache.mina.core.session.IoSession;
 
 import net.buddat.mineserv.net.packet.Packet;
-import net.buddat.mineserv.net.packet.PacketBuilder;
 import net.buddat.mineserv.net.packet.PacketHandler;
 import net.buddat.mineserv.net.packet.PacketStore;
 import net.buddat.mineserv.plr.Player;

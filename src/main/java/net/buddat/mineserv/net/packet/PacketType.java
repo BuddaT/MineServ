@@ -212,7 +212,7 @@ public enum PacketType {
 	 *            Id of the PacketType to retrieve.
 	 * @return PacketType of the specified id, or null if none exist.
 	 */
-	public PacketType getPacketTypeForId(int id) {
+	public static PacketType getPacketTypeForId(int id) {
 		return IDS_TO_PACKET_TYPES.get(id);
 	}
 }

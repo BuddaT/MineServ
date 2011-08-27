@@ -1,6 +1,7 @@
 package net.buddat.mineserv.net.codec;
 
 import net.buddat.mineserv.net.packet.Packet;
+import net.buddat.mineserv.net.packet.PacketType;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
@@ -9,10 +10,8 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 public class MinecraftProtocolDecoder implements ProtocolDecoder {
 
-	private int[] packetLengths;
+	public MinecraftProtocolDecoder() {
 
-	public MinecraftProtocolDecoder(int[] pLen) {
-		this.packetLengths = pLen;
 	}
 
 	@Override
@@ -20,10 +19,13 @@ public class MinecraftProtocolDecoder implements ProtocolDecoder {
 			throws Exception {
 		if (in.remaining() >= 1) {
 			int id = in.get();
-			int len = packetLengths[id];
+			PacketType packetType = PacketType.getPacketTypeForId(id);
+			int len;
 			
-			if (len == -1) { //variable length
+			if (packetType.isVariableLength()) {
 				len = in.remaining();
+			} else {
+				len = packetType.getLength();
 			}
 			
 			if (len < 0) {
