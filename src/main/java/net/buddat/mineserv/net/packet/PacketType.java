@@ -1,5 +1,9 @@
 package net.buddat.mineserv.net.packet;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Represents a type of packet, from the client to the server or vice versa.
@@ -135,6 +139,16 @@ public enum PacketType {
 	DISCONNECT_KICK(0xFF),
 	;
 
+	private static final Map<Integer, PacketType> IDS_TO_PACKET_TYPES;
+
+	static {
+		HashMap<Integer, PacketType> idsToPacketTypes = new HashMap<Integer, PacketType>();
+		for (PacketType packetType: values()) {
+			idsToPacketTypes.put(packetType.getId(), packetType);
+		}
+		IDS_TO_PACKET_TYPES = Collections.unmodifiableMap(idsToPacketTypes);
+	}
+
 	private final int id;
 
 	private final boolean isVariableLength;
@@ -188,5 +202,17 @@ public enum PacketType {
 	 */
 	public int getLength() {
 		return length;
+	}
+
+	/**
+	 * Returns the PacketType that has the corresponding id, or null if none
+	 * exist.
+	 *
+	 * @param id
+	 *            Id of the PacketType to retrieve.
+	 * @return PacketType of the specified id, or null if none exist.
+	 */
+	public PacketType getPacketTypeForId(int id) {
+		return IDS_TO_PACKET_TYPES.get(id);
 	}
 }
