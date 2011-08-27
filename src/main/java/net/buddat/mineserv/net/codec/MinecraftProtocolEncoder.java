@@ -11,12 +11,10 @@ import org.slf4j.LoggerFactory;
 
 public class MinecraftProtocolEncoder implements ProtocolEncoder {
 
-	private final int[] packetLengths;
-
 	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
 
-	public MinecraftProtocolEncoder(int[] pLen) {
-		this.packetLengths = pLen;
+	public MinecraftProtocolEncoder() {
+
 	}
 
 	@Override

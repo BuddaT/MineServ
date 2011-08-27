@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.buddat.mineserv.Engine;
 import net.buddat.mineserv.MineServ;
-import net.buddat.mineserv.net.codec.MinecraftProtocolEncoder;
 import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.plr.Player;
 import net.buddat.mineserv.plr.PlayerManager;

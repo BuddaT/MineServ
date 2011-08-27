@@ -1,7 +1,5 @@
 package net.buddat.mineserv.net.packet;
 
-import net.buddat.mineserv.net.codec.MinecraftCodecFactory;
-
 public class PacketStore {
 	
 	public static String UTF16 = "UTF-16BE";
@@ -12,76 +10,76 @@ public class PacketStore {
 	}
 
 	public static Packet getLoginResponsePacket(int entityId, String unknown, long mapSeed, byte dimension) {
-		int packetId = 1;
+		PacketType packetType = PacketType.LOGIN_REQUEST_RESPONSE;
 		
 		int packetLength = 15 + (unknown != null ? (unknown.length() * 2) : 0);
-		Packet packet = new PacketBuilder(packetLength).setId(packetId)
+		Packet packet = new PacketBuilder(packetLength).setId(packetType.getId())
 				.addInt(entityId).addString(unknown, UTF16).addLong(mapSeed).addByte(dimension).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getHandshakePacket(String connHash) {
-		int packetId = 2;
+		PacketType packetType = PacketType.HANDSHAKE;
 		
 		int packetLength = 2 + (connHash.length() * 2);
-		Packet packet = new PacketBuilder(packetLength).setId(packetId)
+		Packet packet = new PacketBuilder(packetLength).setId(packetType.getId())
 				.addString(connHash, UTF16).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getChatPacket(String msg) {
-		int packetId = 3;
+		PacketType packetType = PacketType.CHAT;
 		
 		int packetLength = 2 + (msg.length() * 2);
-		Packet packet = new PacketBuilder(packetLength).setId(packetId)
+		Packet packet = new PacketBuilder(packetLength).setId(packetType.getId())
 				.addString(msg, UTF16).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getTimePacket(long time) {
-		int packetId = 4;
+		PacketType packetType = PacketType.TIME_UPDATE;
 		
-		Packet packet = new PacketBuilder(MinecraftCodecFactory.getPacketLength(packetId)).setId(packetId)
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
 				.addLong(time).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getEntityEquipPacket(int entityId, short equipSlot, short itemId, short dmg) {
-		int packetId = 5;
+		PacketType packetType = PacketType.ENTITY_EQUIPMENT;
 		
-		Packet packet = new PacketBuilder(MinecraftCodecFactory.getPacketLength(packetId)).setId(packetId)
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
 				.addInt(entityId).addShort(equipSlot).addShort(itemId).addShort(dmg).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getSpawnPosPacket(int xPos, int yPos, int zPos) {
-		int packetId = 6;
+		PacketType packetType = PacketType.SPAWN_POSITION;
 		
-		Packet packet = new PacketBuilder(MinecraftCodecFactory.getPacketLength(packetId)).setId(packetId)
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
 				.addInt(xPos).addInt(yPos).addInt(zPos).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getHealthUpdatePacket(short newHealth) {
-		int packetId = 8;
+		PacketType packetType = PacketType.UPDATE_HEALTH;
 		
-		Packet packet = new PacketBuilder(MinecraftCodecFactory.getPacketLength(packetId)).setId(packetId)
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
 				.addShort(newHealth).toPacket();
 		
 		return packet;
 	}
 	
 	public static Packet getKickPacket(String reason) {
-		int packetId = 255;
+		PacketType packetType = PacketType.DISCONNECT_KICK;
 		
 		int packetLength = 2 + (reason.length() * 2);
-		Packet packet = new PacketBuilder(packetLength).setId(packetId)
+		Packet packet = new PacketBuilder(packetLength).setId(packetType.getId())
 				.addString(reason, UTF16).toPacket();
 		
 		return packet;

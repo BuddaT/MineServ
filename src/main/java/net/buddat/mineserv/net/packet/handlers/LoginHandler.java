@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.buddat.mineserv.MineServ;
-import net.buddat.mineserv.net.codec.MinecraftProtocolEncoder;
 import net.buddat.mineserv.net.packet.Packet;
 import net.buddat.mineserv.net.packet.PacketHandler;
 import net.buddat.mineserv.net.packet.PacketStore;
