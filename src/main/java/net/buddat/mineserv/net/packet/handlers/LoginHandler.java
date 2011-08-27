@@ -17,7 +17,7 @@ import net.buddat.mineserv.plr.PlayerManager;
 
 public class LoginHandler implements PacketHandler {
 	
-	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
+	private final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
 
 	@Override
 	public void handlePacket(Packet p) {

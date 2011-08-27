@@ -13,7 +13,7 @@ import net.buddat.mineserv.plr.PlayerManager;
 
 public class Engine {
 
-	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
+	private final Logger logger = LoggerFactory.getLogger(Engine.class);
 	
 	private PlayerManager playerManager;
 	

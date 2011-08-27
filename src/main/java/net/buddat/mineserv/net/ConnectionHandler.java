@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class ConnectionHandler implements IoHandler {
 	
-	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
+	private final Logger logger = LoggerFactory.getLogger(ConnectionHandler.class);
 	
 	private Engine serverEngine;
 	private PlayerManager plrManager;
