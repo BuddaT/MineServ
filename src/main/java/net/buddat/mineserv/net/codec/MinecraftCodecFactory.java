@@ -20,8 +20,9 @@ public class MinecraftCodecFactory implements ProtocolCodecFactory {
 		return encoder;
 	}
 	
-	static {
-		final int[] packetLengthsIn = new int[256];
+	private static final int[] packetLengthsIn = new int[256];
+	
+	static {		
 		
 		packetLengthsIn[0] = 1;
 		packetLengthsIn[1] = -1;
@@ -282,6 +283,10 @@ public class MinecraftCodecFactory implements ProtocolCodecFactory {
 		
 		encoder = new MinecraftProtocolEncoder(packetLengthsIn);
 		decoder = new MinecraftProtocolDecoder(packetLengthsIn);
+	}
+	
+	public static int getPacketLength(int id) {
+		return packetLengthsIn[id];
 	}
 
 }

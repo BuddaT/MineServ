@@ -32,10 +32,8 @@ public class HandshakeHandler implements PacketHandler {
 			
 			String connectionHash = Long.toHexString(session.getId());
 			plr.setConnectionHash(connectionHash);
-			
-			int packetLength = 2 + (connectionHash.length() * 2); //Needs to be (2+(length*2)) due to 2 bytes per char in UTF-16 (plus 2 for the length short)
 	
-			session.write(new PacketBuilder(packetLength).setId(2).addString(connectionHash, PacketStore.UTF16).toPacket());
+			session.write(PacketStore.getHandshakePacket(connectionHash));
 		}
 	}
 
