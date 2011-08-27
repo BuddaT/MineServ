@@ -89,12 +89,14 @@ public class Engine {
 	private void bindPacketHandlers() {
 		int[] packets = {
 				1,
-				2
+				2,
+				3
 		};
 		
 		PacketHandler[] handlers = {
 				new LoginHandler(),
-				new HandshakeHandler()
+				new HandshakeHandler(),
+				new ChatHandler()
 		};
 		
 		for (int i = 0; i < packets.length; i++) {

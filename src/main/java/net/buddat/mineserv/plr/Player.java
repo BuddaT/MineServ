@@ -6,7 +6,7 @@ public class Player {
 
 	private IoSession session;
 	
-	private String playerName;
+	private String playerName, playerTitle = "";
 	private String connectionHash;
 	
 	private boolean connected = false;
@@ -45,5 +45,13 @@ public class Player {
 
 	public boolean isConnected() {
 		return connected;
+	}
+
+	public String getPlayerTitle() {
+		return playerTitle;
+	}
+
+	public void setPlayerTitle(String playerTitle) {
+		this.playerTitle = playerTitle;
 	}
 }
