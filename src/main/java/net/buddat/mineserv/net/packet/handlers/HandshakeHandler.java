@@ -9,8 +9,19 @@ import net.buddat.mineserv.net.packet.PacketHandler;
 import net.buddat.mineserv.net.packet.PacketStore;
 import net.buddat.mineserv.plr.Player;
 
+/**
+ * Handles incoming Handshake packets.
+ * 
+ * @author Budda
+ */
 public class HandshakeHandler implements PacketHandler {
 
+	/**
+	 * Grabs the player name from the packet, and send the response packet
+	 * with the player's connectionHash.
+	 * 
+	 * @see net.buddat.mineserv.net.packet.PacketHandler#handlePacket(net.buddat.mineserv.net.packet.Packet)
+	 */
 	@Override
 	public void handlePacket(Packet p) {
 		IoSession session = p.getSession();

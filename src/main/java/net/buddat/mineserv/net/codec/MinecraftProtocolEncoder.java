@@ -9,20 +9,34 @@ import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Encodes packets into byte buffers which is then passed on to MINA
+ * to write to the session.
+ * Only access directly by MINA.
+ * 
+ * @author Budda
+ */
 public class MinecraftProtocolEncoder implements ProtocolEncoder {
 
+	/** The logger. */
 	private final Logger logger = LoggerFactory.getLogger(MinecraftProtocolEncoder.class);
 
-	public MinecraftProtocolEncoder() {
+	/**
+	 * Instantiates a new minecraft protocol encoder.
+	 */
+	public MinecraftProtocolEncoder() { }
 
-	}
-
+	/* (non-Javadoc)
+	 * @see org.apache.mina.filter.codec.ProtocolEncoder#dispose(org.apache.mina.core.session.IoSession)
+	 */
 	@Override
 	public void dispose(IoSession session) throws Exception {
-		// TODO Auto-generated method stub
-
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.mina.filter.codec.ProtocolEncoder#encode(org.apache.mina.core.session.IoSession, java.lang.Object, org.apache.mina.filter.codec.ProtocolEncoderOutput)
+	 */
 	@Override
 	public void encode(IoSession session, Object message,
 			ProtocolEncoderOutput out) throws Exception {

@@ -14,10 +14,23 @@ import net.buddat.mineserv.net.packet.PacketStore;
 import net.buddat.mineserv.plr.Player;
 import net.buddat.mineserv.plr.PlayerManager;
 
+/**
+ * Handles incoming Login packets.
+ * 
+ * @author Budda
+ */
 public class LoginHandler implements PacketHandler {
 	
+	/** The default logger for this class. */
 	private final Logger logger = LoggerFactory.getLogger(LoginHandler.class);
 
+	/**
+	 * Parses the packet and checks whether the connecting player is banned.
+	 * 
+	 * Unfinished.
+	 * 
+	 * @see net.buddat.mineserv.net.packet.PacketHandler#handlePacket(net.buddat.mineserv.net.packet.Packet)
+	 */
 	@Override
 	public void handlePacket(Packet p) {
 		IoSession session = p.getSession();

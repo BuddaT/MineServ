@@ -3,3 +3,5 @@ logs
 target
 *.*~
 lib
+/banned-ip.txt
+/banned.txt
