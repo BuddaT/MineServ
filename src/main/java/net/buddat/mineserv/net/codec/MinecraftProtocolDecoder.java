@@ -30,6 +30,12 @@ public class MinecraftProtocolDecoder implements ProtocolDecoder {
 			throws Exception {
 		if (in.remaining() >= 1) {
 			int id = in.get();
+			
+			/*
+			 * Hackery to make signed bytes into unsigned ones.
+			 */
+			if (id < 0) id = 256 + id;
+			
 			PacketType packetType = PacketType.getPacketTypeForId(id);
 			int len;
 			

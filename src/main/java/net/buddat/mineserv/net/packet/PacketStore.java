@@ -144,6 +144,111 @@ public class PacketStore {
 	}
 	
 	/**
+	 * @see PacketType#RESPAWN
+	 *
+	 * @param world the world
+	 * @return the respawn packet
+	 */
+	public static Packet getRespawnPacket(byte world) {
+		PacketType packetType = PacketType.RESPAWN;
+		
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
+				.addByte(world).toPacket();
+		
+		return packet;
+	}
+	
+	/**
+	 * @see PacketType#PLAYER_POSITION_LOOK
+	 *
+	 * @param x player x position
+	 * @param y player y position
+	 * @param z player z position
+	 * @param stance player stance
+	 * @param yaw player yaw
+	 * @param pitch player pitch
+	 * @param onGround true if player is on the ground
+	 * @return the player position and look packet
+	 */
+	public static Packet getPlayerPosAndLookPacket(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround) {
+		PacketType packetType = PacketType.PLAYER_POSITION_LOOK;
+		
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
+				.addDouble(x).addDouble(stance).addDouble(y).addDouble(z).addFloat(yaw)
+				.addFloat(pitch).addByte((byte) (onGround == false ? 0 : 1)).toPacket();
+		
+		return packet;
+	}
+	
+	/**
+	 * @see PacketType#USE_BED
+	 *
+	 * @param entityID the entity id
+	 * @param inBed 0 if player uses bed
+	 * @param x x pos of bed headboard
+	 * @param y y pos of bed headboard
+	 * @param z z pos of bed headboard
+	 * @return the use bed packet
+	 */
+	public static Packet getUseBedPacket(int entityId, byte inBed, int x, byte y, int z) {
+		PacketType packetType = PacketType.USE_BED;
+		
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
+				.addInt(entityId).addByte(inBed).addInt(x).addByte(y).addInt(z).toPacket();
+		
+		return packet;
+	}
+	
+	/**
+	 * @see PacketType#NAMED_ENTITY_SPAWN
+	 *
+	 * @param entityId the entity id
+	 * @param name the entity's name
+	 * @param x x position
+	 * @param y y position
+	 * @param z z position
+	 * @param rotation the rotation
+	 * @param pitch the pitch
+	 * @param itemHeld the item held (0 for nothing, -1 causes crash)
+	 * @return the named entity spawn packet
+	 */
+	public static Packet getNamedEntitySpawnPacket(int entityId, String name, int x, int y, int z, byte rotation, byte pitch, short itemHeld) {
+		PacketType packetType = PacketType.NAMED_ENTITY_SPAWN;
+		
+		int packetLength = 20 + 2 + (name.length() * 2);
+		Packet packet = new PacketBuilder(packetLength).setId(packetType.getId())
+				.addInt(entityId).addString(name, UTF16).addInt(x).addInt(y).addInt(z)
+				.addByte(rotation).addByte(pitch).addShort(itemHeld).toPacket();
+		
+		return packet;
+	}
+	
+	/**
+	 * @see PacketType#PICKUP_SPAWN
+	 *
+	 * @param entityId the entity id
+	 * @param itemId the item id
+	 * @param count the item count
+	 * @param damageOrData the damage or data
+	 * @param x the x
+	 * @param y the y
+	 * @param z the z
+	 * @param rotation the rotation
+	 * @param pitch the pitch
+	 * @param roll the roll
+	 * @return the pickup spawn packet
+	 */
+	public static Packet getPickupSpawnPacket(int entityId, short itemId, byte count, short damageOrData, int x, int y, int z, byte rotation, byte pitch, byte roll) {
+		PacketType packetType = PacketType.PICKUP_SPAWN;
+		
+		Packet packet = new PacketBuilder(packetType.getLength()).setId(packetType.getId())
+				.addInt(entityId).addShort(itemId).addByte(count).addShort(damageOrData)
+				.addInt(x).addInt(y).addInt(z).addByte(rotation).addByte(pitch).addByte(roll).toPacket();
+		
+		return packet;
+	}
+	
+	/**
 	 * @see PacketType#DISCONNECT_KICK
 	 *
 	 * @param reason the reason

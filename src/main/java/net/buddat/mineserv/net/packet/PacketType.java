@@ -325,6 +325,11 @@ public enum PacketType {
 	 * Server-initiated to increment a statistic.
 	 */
 	INCREMENT_STATISTIC(0xC8, 6),
+	
+	/**
+	 * Sent to server to retrieve MOTD and player-count
+	 */
+	SERVER_LIST_PING(0xFE),
 
 	/**
 	 * Server-initiated before it disconnects a client, and client-initiated

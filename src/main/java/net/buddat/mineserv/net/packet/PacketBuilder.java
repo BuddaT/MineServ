@@ -104,6 +104,33 @@ public class PacketBuilder {
 		return this;
 	}
 	
+	
+	/**
+	 * Converts double to long bits then adds to payload.
+	 *
+	 * @param d double to add
+	 * @return the packet builder
+	 */
+	public PacketBuilder addDouble(double d) {
+		long l = Double.doubleToLongBits(d);
+		addLong(l);
+		
+		return this;
+	}
+	
+	/**
+	 * Converts float to int bits then adds to payload.
+	 *
+	 * @param f float to add
+	 * @return the packet builder
+	 */
+	public PacketBuilder addFloat(float f) {
+		int i = Float.floatToIntBits(f);
+		addInt(i);
+		
+		return this;
+	}
+	
 	/**
 	 * Adds a string to the payload. 
 	 * Default encoding is UTF-16BE - because of this it adds a short for the

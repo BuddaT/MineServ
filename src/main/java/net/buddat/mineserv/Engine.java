@@ -153,13 +153,15 @@ public class Engine {
 		int[] packets = {
 				PacketType.LOGIN_REQUEST_RESPONSE.getId(),
 				PacketType.HANDSHAKE.getId(),
-				PacketType.CHAT.getId()
+				PacketType.CHAT.getId(),
+				PacketType.SERVER_LIST_PING.getId()
 		};
 		
 		PacketHandler[] handlers = {
 				new LoginHandler(),
 				new HandshakeHandler(),
-				new ChatHandler()
+				new ChatHandler(),
+				new PingHandler()
 		};
 		
 		for (int i = 0; i < packets.length; i++) {
