@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 
 import net.buddat.mineserv.net.ConnectionHandler;
 import net.buddat.mineserv.net.codec.MinecraftCodecFactory;
+import net.buddat.mineserv.options.Options;
 
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.service.IoHandler;
@@ -21,8 +22,8 @@ import org.slf4j.LoggerFactory;
  */
 public class MineServ {
 
-	/** Port to bind the server to. */
-	public static final int PORT = 25565;
+	/** Path to the options file. */
+	public static final String OPTIONS_FILE = "config.ini";
 	
 	/** Path and filenames of ban and ip-ban lists. */
 	public static final String BANNED_LIST = "banned.txt", IPBANNED_LIST = "banned-ip.txt";
@@ -38,6 +39,9 @@ public class MineServ {
 
 	/** The server engine. */
 	private final Engine serverEngine;
+	
+	/** The server options. */
+	private final Options serverOptions;
 
 	/**
 	 * Default logger for this class.
@@ -59,6 +63,8 @@ public class MineServ {
 	 */
 	public MineServ() {
 		mineservInstance = this;
+		
+		serverOptions = new Options(OPTIONS_FILE);
 
 		serverEngine = new Engine();
 
@@ -71,8 +77,10 @@ public class MineServ {
 		connectionAcceptor.setHandler(serverIoHandler);
 
 		try {
-			connectionAcceptor.bind(new InetSocketAddress(PORT));
-			logger.info("Bound to port: {}", PORT);
+			int port = (Integer) getOptions().getOption(Options.PORT).getValue();
+			
+			connectionAcceptor.bind(new InetSocketAddress(port));
+			logger.info("Bound to port: {}", port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -96,6 +104,15 @@ public class MineServ {
 	 */
 	public Engine getEngine() {
 		return serverEngine;
+	}
+	
+	/**
+	 * Gets the options for the server.
+	 * 
+	 * @return the options
+	 */
+	public Options getOptions() {
+		return serverOptions;
 	}
 	
 }

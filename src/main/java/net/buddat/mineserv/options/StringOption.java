@@ -54,7 +54,7 @@ public class StringOption extends Option {
 	 */
 	@Override
 	public String toString() {
-		return (getComment() == null ? "" : Options.COMMENT_CHAR + getComment() + "\r\n") + getKey() + Options.DELIMETER + getValue();
+		return (getComment() == null ? "" : Options.COMMENT_CHAR + getComment() + "\r\n") + getKey() + Options.DELIMITER + getValue();
 	}
 
 }

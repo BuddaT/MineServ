@@ -26,8 +26,10 @@ public class Options {
 	/** The character to use to denote comments in the config file. */
 	public static final String COMMENT_CHAR = "#";
 	
-	/** The String to denote delimeters between keys and values in the config file. */
-	public static final String DELIMETER = "=";
+	/** The String to denote delimiters between keys and values in the config file. */
+	public static final String DELIMITER = "=";
+	
+	public static final String LIST_DELIMITER = ",";
 	
 	/** Map of all options. */
 	private HashMap<String, Option> optionMap = new HashMap<String, Option>();
@@ -95,8 +97,8 @@ public class Options {
 			
 			while ((line = br.readLine()) != null) {
 				if (!line.startsWith(COMMENT_CHAR)) {
-					if (line.contains(DELIMETER)) {
-						String parts[] = line.split(DELIMETER);
+					if (line.contains(DELIMITER)) {
+						String parts[] = line.split(DELIMITER);
 						
 						if (getOption(parts[0]) != null)
 							getOption(parts[0]).setValue(parts[1]);
@@ -132,8 +134,11 @@ public class Options {
 				
 				previousLine = line;
 			}
-		} catch (IOException e) {
 			
+			logger.info("Loaded config file from {}", file);
+		} catch (IOException e) {
+			logger.error("Unable to load config file from {}", file);
+			e.printStackTrace();
 		}
 	}
 	
@@ -154,9 +159,9 @@ public class Options {
 				bw.write(o.toString());
 			}
 			
-			logger.info("Saved config file to " + file);
+			logger.info("Saved config file to {}", file);
 		} catch (IOException e) {
-			logger.error("Unable to save config file to " + file);
+			logger.error("Unable to save config file to {}", file);
 			e.printStackTrace();
 		}
 	}
@@ -166,9 +171,9 @@ public class Options {
 	 */
 	{
 		Option defaultOptions[] = { 
-				new StringOption("server.name", "MineServ"),
-				new IntegerOption("server.port", 25565),
-				new IntegerOption("server.maxplayers", 20),
+				new StringOption(NAME, "MineServ"),
+				new IntegerOption(PORT, 25565),
+				new IntegerOption(MAX_PLAYERS, 20),
 				new StringOption("server.motd", "A MineServ Server"),
 				new BooleanOption("server.creative", false, "Sets whether the server is in creative mode."),
 				new BooleanOption("server.online", true, "Sets whether the server connects to the central Minecraft.net servers for authentication."),
@@ -180,4 +185,10 @@ public class Options {
 		for (Option o : defaultOptions)
 			addOption(o.getKey(), o);
 	}
+	
+	public static final String NAME = "server.name", 
+			PORT = "server.port",
+			MAX_PLAYERS = "server.maxplayers",
+			MOTD = "server.motd";
+	
 }
