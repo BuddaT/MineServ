@@ -38,7 +38,10 @@ public class IntegerOption extends Option {
 	 */
 	@Override
 	public void setValue(Object newValue) {
-		this.value = (Integer) newValue;
+		if (newValue instanceof String)
+			this.value = Integer.parseInt((String) newValue);
+		else
+			this.value = (Integer) newValue;
 	}
 	
 	/* (non-Javadoc)

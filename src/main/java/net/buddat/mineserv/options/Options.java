@@ -157,7 +157,12 @@ public class Options {
 			for (String key : optionMap.keySet()) {
 				Option o = optionMap.get(key);
 				bw.write(o.toString());
+				bw.newLine();
+				bw.newLine();
 			}
+			
+			bw.flush();
+			bw.close();
 			
 			logger.info("Saved config file to {}", file);
 		} catch (IOException e) {

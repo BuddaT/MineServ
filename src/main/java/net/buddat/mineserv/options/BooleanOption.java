@@ -38,7 +38,10 @@ public class BooleanOption extends Option {
 	 */
 	@Override
 	public void setValue(Object newValue) {
-		this.value = (Boolean) newValue;
+		if (newValue instanceof String)
+			this.value = Boolean.parseBoolean((String) newValue);
+		else
+			this.value = (Boolean) newValue;
 	}
 	
 	/* (non-Javadoc)
